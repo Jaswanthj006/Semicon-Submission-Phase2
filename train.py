@@ -876,20 +876,6 @@ def save_failure_panel(sea, gt, pred, box_w, err, path: Path):
     cv2.imwrite(str(path), img)
 
 
-def pr_curve(conf: np.ndarray, correct: np.ndarray):
-    order = np.argsort(-conf)
-    c = correct[order]
-    tp = np.cumsum(c)
-    fp = np.cumsum(~c)
-    precision = tp / np.maximum(tp + fp, 1)
-    recall = tp / max(len(c), 1)
-    precision = np.concatenate([[1.0], precision])
-    recall = np.concatenate([[0.0], recall])
-    trapezoid = getattr(np, "trapezoid", np.trapz)
-    ap = float(trapezoid(precision, recall))
-    return precision, recall, ap
-
-
 def stage3(args):
     out_dir = Path(args.out)
     device = pick_device()
@@ -986,34 +972,6 @@ def stage3(args):
         w = csv.DictWriter(f, fieldnames=list(results[0].keys()))
         w.writeheader()
         w.writerows(results)
-
-    # PR curves: confidence vs correctness (<=5px), overall + per bucket
-    try:
-        import matplotlib
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-        fig, ax = plt.subplots(figsize=(6, 5))
-        conf = np.array([r["conf"] for r in loc_results])
-        correct = errs <= 5.0 if len(errs) else np.array([], dtype=bool)
-        groups = [("ALL", np.ones(len(loc_results), bool))] if len(loc_results) else []
-        groups += [(b, np.array([x == b for x in buckets])) for b in sorted(set(buckets))]
-        for name, mask in groups:
-            if mask.sum() < 2:
-                continue
-            p, rcl, ap = pr_curve(conf[mask], correct[mask])
-            ax.plot(rcl, p, marker="o", markersize=2.5, label=f"{name} (AP={ap:.2f})")
-        ax.set_xlabel("Recall")
-        ax.set_ylabel("Precision")
-        ax.set_title(f"DriftLoc PR by noise bucket ({args.split}, tol=5px)")
-        ax.set_ylim(0, 1.05)
-        ax.grid(alpha=0.3)
-        ax.legend(fontsize=8)
-        fig.tight_layout()
-        pr_path = out_dir / f"pr_{args.split}.png"
-        fig.savefig(pr_path, dpi=140)
-        print(f"  PR curves -> {pr_path}")
-    except ImportError:
-        print("  matplotlib not available: skipped PR plot")
 
     # failure panels for the explainability slide
     fails = sorted((r for r in results if r["err"] > 5.0),
