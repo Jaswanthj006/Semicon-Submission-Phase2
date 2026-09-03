@@ -21,8 +21,6 @@ that says whether the reference is even present.
 | `model/verifier.pt` | Trained weights (ships in the ZIP) |
 | `requirements.txt` | All dependencies |
 
-Python **3.11** is required. No GPU, no internet needed at run time.
-
 ---
 
 ## How to Test
