@@ -5,7 +5,6 @@ Given a 100× reference crop and a 10× search image, find where the reference s
 return its centre `(x, y)`, orientation `theta`, zoom `scale`, and a `found` flag
 that says whether the reference is even present.
 
-- **Phase 2 repo (this one):** https://github.com/Jaswanthj006/Semicon-Submission-Phase2
 - **Phase 1 repo:** https://github.com/Jaswanthj006/Semicon-Submission
 
 ---
