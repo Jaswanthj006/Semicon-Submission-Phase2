@@ -79,13 +79,6 @@ python register.py --input "C:\Users\<you>\Downloads\phase2_test_set\pairs.csv" 
 python register.py --input /path/to/phase2_test_set/pairs.csv --output predictions.csv
 ```
 
-**Important — `--input` must be the `pairs.csv` file, not the folder.**
-
-| ❌ Wrong | ✅ Correct |
-|---|---|
-| `--input phase2_test_set` | `--input phase2_test_set\pairs.csv` |
-| `--input phase2_test_set.pairs.csv` | `--input phase2_test_set\pairs.csv` |
-
 When it finishes you will see:
 ```
 wrote 450 rows -> predictions.csv
