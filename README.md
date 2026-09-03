@@ -113,18 +113,6 @@ p002,0.0000,0.0000,0.0000,0.0000,0,0.041200
 
 ---
 
-### Common Windows problems
-
-| Symptom | Fix |
-|---|---|
-| `requirements.txt: No such file` | You are in the outer ZIP folder — `cd ".\Semicon-Submission-Phase2-main"` |
-| `FileNotFoundError: phase2_test_set.pairs.csv` | The file is `phase2_test_set\pairs.csv` (a folder, then `pairs.csv`) |
-| `source` not recognised | PowerShell uses `.\.venv\Scripts\Activate.ps1` |
-| `Missing expression after --` | The full command must be on **one line**, no `\` breaks |
-| `No module named 'cv2'` | Activate `.venv` first, then re-run `pip install -r requirements.txt` |
-| numpy build fails / no compiler | Use Python **3.11** — pre-built wheels are available for it |
-
----
 
 ## What we improved from Phase 1
 
