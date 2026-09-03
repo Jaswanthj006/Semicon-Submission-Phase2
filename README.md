@@ -133,21 +133,6 @@ pair_id,x,y,theta,scale,found,score
 
 ---
 
-## Windows notes (teammates)
-
-| Problem | Fix |
-|---|---|
-| `requirements.txt` not found | You’re in the outer ZIP folder — `cd` one level deeper |
-| `source` not recognized | Use `.\.venv\Scripts\Activate.ps1` |
-| `Missing expression after '--'` | Put the full `register.py` command on **one line** |
-| `--input` points at an image folder | Pass `pairs.csv` instead |
-| `No module named 'cv2'` | Activate `.venv`, then finish `pip install -r requirements.txt` |
-| pip tries to build numpy / compiler errors | Wrong Python (e.g. 3.14). Recreate the venv with the machine’s **3.11** interpreter |
-
-Evaluation machines already have Python 3.11; no extra Python install is needed there.
-
----
-
 ## Method (short)
 
 ZNCC multi-scale/rotation proposals → CNN verifier → sub-pixel + pose refine → confidence reject for absent cases.  
